@@ -13,7 +13,9 @@ class ModelTests(TestCase):
         """Test creating a user with an email is successful."""
         email = 'test@example.com'
         password = 'testpass123'
-        user = get_user_model().objects.create_user(email=email, password=password)
+        user = get_user_model().objects.create_user(
+            email=email, password=password
+            )
 
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
@@ -27,5 +29,7 @@ class ModelTests(TestCase):
             ['Test4@example.COM', 'test4@example.com'],
         ]
         for email, expected in sample_emails:
-            user = get_user_model().objects.create_user(email, 'sample123')
+            user = get_user_model().objects.create_user(
+                email=email, password='sample123'
+            )
             self.assertEqual(user.email, expected)
