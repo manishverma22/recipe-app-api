@@ -13,4 +13,3 @@ app_name = 'recipe'
 urlpatterns = [
     path('', include(router.urls)),
 ]
-# This will include the URLs for the RecipeViewSet, allowing CRUD operations on recipes.

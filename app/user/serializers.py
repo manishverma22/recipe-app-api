@@ -25,7 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
         """Create a new user with encrypted password."""
         password = validated_data.get('password')
         if password is not None and len(password) < 8:
-            raise serializers.ValidationError({'password': 'Password must be at least 8 characters long.'})
+            raise serializers.ValidationError({
+                'password': 'Password must be at least 8 characters long.'
+            })
         user = User(**validated_data)
         user.set_password(password)
         user.save()
@@ -41,6 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user authentication object."""
     email = serializers.EmailField()
@@ -54,7 +57,11 @@ class AuthTokenSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
-        user = authenticate(request=self.context.get('request'), email=email, password=password)
+        user = authenticate(
+            request=self.context.get('request'),
+            email=email,
+            password=password
+        )
 
         if not user:
             msg = _('Unable to authenticate with provided credentials.')

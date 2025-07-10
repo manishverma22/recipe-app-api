@@ -30,10 +30,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return serializers.RecipeDetailSerializer
         return super().get_serializer_class()
 
-    def perform_create(self, serializer):
-        """Create a new recipe."""
-        serializer.save(user=self.request.user)
-
     def get_object(self):
         """Retrieve and return a recipe instance by pk."""
         from rest_framework.generics import get_object_or_404
@@ -46,5 +42,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if instance.user != request.user:
             from rest_framework.response import Response
             from rest_framework import status
-            return Response({'detail': 'You do not have permission to delete this recipe.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'detail': 'You do not have permission to delete this recipe.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         return super().destroy(request, *args, **kwargs)

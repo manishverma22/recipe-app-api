@@ -1,6 +1,8 @@
 """
 Database models for the core app.
 """
+
+
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
@@ -46,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
 
 class Recipe(models.Model):
     """Recipe object."""
